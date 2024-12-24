@@ -13,7 +13,10 @@ public class DeathPlane : MonoBehaviour
             // TODO: Remove a life.
             // TODO: Reset the ball tied to the paddle.
             ball.ResetPosition();
+            return;
         }
+
+        var collectible = collision.GetComponent<Collectible>();
 
         Debug.Log("Collided");
     }

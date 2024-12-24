@@ -15,7 +15,7 @@ public class BreakableBrick : BaseBrick
         RefreshColor();
     }
 
-    protected virtual void OnCollisionEnter2D(Collision2D collision)
+    protected void OnCollisionEnter2D(Collision2D collision)
     {
         var ball = collision.gameObject.GetComponent<Ball>();
         if (ball != null)
@@ -23,13 +23,18 @@ public class BreakableBrick : BaseBrick
             health--;
             if (health <= 0)
             {
-                Destroy(gameObject);
+                OnDestruction();
             }
             else
             {
                 RefreshColor();
             }
         }
+    }
+
+    protected virtual void OnDestruction()
+    {
+        Destroy(gameObject);
     }
 
     protected override void RefreshColor()
