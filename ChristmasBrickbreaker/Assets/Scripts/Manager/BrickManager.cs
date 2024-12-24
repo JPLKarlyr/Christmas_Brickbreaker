@@ -13,6 +13,9 @@ public class BrickManager : MonoBehaviour
     [SerializeField]
     private Color _endColor;
 
+    [SerializeField]
+    private Color _unbreakableColor;
+
     private int _maxHealth;
 
     private void Start()
@@ -21,7 +24,14 @@ public class BrickManager : MonoBehaviour
         _maxHealth = FetchHighestHealth(bricks);
         foreach (var brick in bricks)
         {
-            brick.Init(_startColor, _endColor, _maxHealth);
+            if (brick is MetalBrick metalBrick)
+            {
+                metalBrick.Init(_unbreakableColor);
+            }
+            else if (brick is BreakableBrick breakBrick)
+            {
+                breakBrick.Init(_startColor, _endColor, _maxHealth);
+            }
         }
     }
 
