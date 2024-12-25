@@ -7,11 +7,9 @@ public class MultiBall : PowerUp
     [SerializeField]
     private GameObject _ballPrefab;
 
-    protected override void Collect()
+    protected override void Collect(Paddle paddle)
     {
-        // Instantiate ball at emplacement
-        var newBall = Instantiate(_ballPrefab, transform.position, Quaternion.identity ,transform.parent);
-
+        paddle.SpawnNewBall();
         Destroy(gameObject);
     }
 }

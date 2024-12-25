@@ -4,6 +4,12 @@ using UnityEngine;
 
 public class DeathPlane : MonoBehaviour
 {
+    private GameManager _gm;
+
+    private void Start()
+    {
+        _gm = FindObjectOfType<GameManager>();
+    }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -11,8 +17,9 @@ public class DeathPlane : MonoBehaviour
         if (ball != null)
         {
             // TODO: Remove a life.
-            // TODO: Reset the ball tied to the paddle.
-            ball.ResetPosition();
+            // TODO: Probably just take the same ball.
+            _gm.SpawnNewBall();
+            Destroy(ball.gameObject);
             return;
         }
 

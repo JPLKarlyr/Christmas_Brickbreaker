@@ -13,28 +13,38 @@ public class Ball : MonoBehaviour
 
     private Rigidbody2D _rb;
     private Vector3 _initialPosition;
+    private bool _isLaunched = false;
     
 
     // Start is called before the first frame update
     private void Start()
     {
         _rb = GetComponent<Rigidbody2D>();
-        _rb.velocity = _initialvelocity;
-        _initialPosition = transform.position;
+        // _rb.velocity = _initialvelocity;
+        // _initialPosition = transform.position;
     }
 
     private void Update()
     {
-        if (Math.Abs(_rb.velocity.y) < _minimumVerticalVelocity)
+        if (_isLaunched)
         {
-            var sign = Math.Sign(_rb.velocity.y);
-            _rb.velocity = new Vector2(_rb.velocity.x * sign, _minimumVerticalVelocity);
+            if (Math.Abs(_rb.velocity.y) < _minimumVerticalVelocity)
+            {
+                var sign = Math.Sign(_rb.velocity.y);
+                _rb.velocity = new Vector2(_rb.velocity.x * sign, _minimumVerticalVelocity);
+            }
         }
     }
 
     public void ResetPosition()
     {
         transform.position = _initialPosition;
+        _rb.velocity = _initialvelocity;
+    }
+
+    public void Launch()
+    {
+        _isLaunched = true;
         _rb.velocity = _initialvelocity;
     }
 }

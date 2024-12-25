@@ -9,9 +9,9 @@ public abstract class Collectible : MonoBehaviour
         var paddle = collision.GetComponent<Paddle>();
         if (paddle != null)
         {
-            Collect();
+            Collect(paddle);
         }
     }
 
-    protected abstract void Collect();
+    protected abstract void Collect(Paddle paddle);
 }
