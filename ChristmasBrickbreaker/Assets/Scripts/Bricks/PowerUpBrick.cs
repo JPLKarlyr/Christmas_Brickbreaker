@@ -7,11 +7,6 @@ public class PowerUpBrick : BreakableBrick
     [SerializeField]
     private GameObject _prefabPowerup;
 
-    protected override void RefreshColor()
-    {
-        throw new System.NotImplementedException();
-    }
-
     protected override void OnDestruction()
     {
         // TODO: Drop a powerup.
