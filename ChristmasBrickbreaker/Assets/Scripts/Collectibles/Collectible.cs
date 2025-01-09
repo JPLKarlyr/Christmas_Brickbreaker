@@ -11,6 +11,12 @@ public abstract class Collectible : MonoBehaviour
         {
             Collect(paddle);
         }
+
+        var deathPlane = collision.GetComponent<DeathPlane>();
+        if (deathPlane != null)
+        {
+            Destroy(gameObject);
+        }
     }
 
     protected abstract void Collect(Paddle paddle);

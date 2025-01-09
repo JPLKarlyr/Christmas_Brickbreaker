@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7536155948559979000}
   - component: {fileID: 8441818685908001001}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: PowerUpHolder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -96,7 +96,7 @@ GameObject:
   - component: {fileID: 8770781592679349539}
   - component: {fileID: 3110573422153796210}
   - component: {fileID: 4002765251293972734}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: MultiBallBrick
   m_TagString: Untagged
   m_Icon: {fileID: 0}

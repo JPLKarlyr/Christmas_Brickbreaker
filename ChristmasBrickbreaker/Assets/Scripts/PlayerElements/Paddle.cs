@@ -13,6 +13,8 @@ public class Paddle : MonoBehaviour
     [SerializeField]
     private List<Ball> _heldBalls;
 
+    private int _fireshotAmount = 0;
+
     private void Update()
     {
         if (Input.GetButton("Fire1"))
@@ -23,6 +25,23 @@ public class Paddle : MonoBehaviour
                 _heldBalls.Remove(launchedBall);
                 launchedBall.transform.parent = null;
                 launchedBall.Launch();
+            }
+        }
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        var ball = collision.gameObject.GetComponent<Ball>();
+        if (ball != null)
+        {
+            if (_fireshotAmount > 0)
+            {
+                ball.EnableFireShot();
+                _fireshotAmount--;
+            }
+            else
+            {
+                ball.EndFireshot();
             }
         }
     }
@@ -44,5 +63,10 @@ public class Paddle : MonoBehaviour
         {
             Debug.LogError("Wrong ball prefab in Paddle.");
         }
+    }
+
+    public void CollectedFireshot(int amount)
+    {
+        _fireshotAmount += amount;
     }
 }

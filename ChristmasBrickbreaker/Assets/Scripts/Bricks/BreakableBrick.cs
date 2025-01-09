@@ -20,15 +20,29 @@ public class BreakableBrick : BaseBrick
         var ball = collision.gameObject.GetComponent<Ball>();
         if (ball != null)
         {
-            health--;
-            if (health <= 0)
-            {
-                OnDestruction();
-            }
-            else
-            {
-                RefreshColor();
-            }
+            OnCollision(ball);
+        }
+    }
+
+    protected void OnTriggerEnter2D(Collider2D collision)
+    {
+        var ball = collision.gameObject.GetComponent<Ball>();
+        if (ball != null)
+        {
+            OnCollision(ball);
+        }
+    }
+
+    protected void OnCollision(Ball ball)
+    {
+        health--;
+        if (health <= 0)
+        {
+            OnDestruction();
+        }
+        else
+        {
+            RefreshColor();
         }
     }
 
