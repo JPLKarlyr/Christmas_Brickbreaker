@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEditor.U2D.Aseprite;
 using UnityEngine;
 
@@ -15,11 +17,15 @@ public class Ball : MonoBehaviour
     [SerializeField]
     private LayerMask _brickLayer;
 
+    [SerializeField]
+    private Collider2D _shatterCollider;
+
     private Rigidbody2D _rb;
     private CircleCollider2D _circleCollider;
     private Vector3 _initialPosition;
     private bool _isLaunched = false;
     private bool _isFireshot = false;
+    private bool _isShatter = false;
 
     // Start is called before the first frame update
     private void Start()
@@ -47,7 +53,39 @@ public class Ball : MonoBehaviour
 
         if (Input.GetButtonDown("PowerUpDebug"))
         {
+            _isShatter = true;
+        }
+    }
 
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        var angle = Math.Atan2(_rb.velocity.normalized.y, _rb.velocity.normalized.x);
+        var degrees = 180 * angle / Math.PI;  //degrees
+        _shatterCollider.gameObject.transform.rotation = Quaternion.Euler(new Vector3(0, 0, (float)degrees - 90));
+
+        if (_isShatter)
+        {
+            var brick = collision.collider.GetComponent<BaseBrick>();
+            if (brick != null)
+            {
+                ShatterBrick();
+                _isShatter = false;
+            }
+        }
+    }
+
+    private void ShatterBrick()
+    { 
+        List<Collider2D> results = new List<Collider2D>();
+        _shatterCollider.OverlapCollider(new ContactFilter2D(), results);
+
+        foreach (var brick in results)
+        {
+            var breakBrick = brick.GetComponent<BreakableBrick>();
+            if (breakBrick != null)
+            {
+                breakBrick.OnCollision();
+            }
         }
     }
 
@@ -75,5 +113,11 @@ public class Ball : MonoBehaviour
     public void EndFireshot()
     {
         _circleCollider.forceReceiveLayers = _circleCollider.forceReceiveLayers | _brickLayer;
+    }
+
+    public void StartShatter()
+    {
+        _isShatter = true;
+        Debug.Log("Shatter !");
     }
 }

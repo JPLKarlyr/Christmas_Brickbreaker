@@ -14,6 +14,7 @@ public class Paddle : MonoBehaviour
     private List<Ball> _heldBalls;
 
     private int _fireshotAmount = 0;
+    private int _shatterAmount = 0;
 
     private void Update()
     {
@@ -43,6 +44,12 @@ public class Paddle : MonoBehaviour
             {
                 ball.EndFireshot();
             }
+
+            if (_shatterAmount > 0)
+            {
+                ball.StartShatter();
+                _shatterAmount--;
+            }
         }
     }
 
@@ -68,5 +75,9 @@ public class Paddle : MonoBehaviour
     public void CollectedFireshot(int amount)
     {
         _fireshotAmount += amount;
+    }
+    public void CollectedShatter(int amount)
+    {
+        _shatterAmount += amount;
     }
 }

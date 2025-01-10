@@ -17,10 +17,10 @@ public class BreakableBrick : BaseBrick
 
     protected void OnCollisionEnter2D(Collision2D collision)
     {
-        var ball = collision.gameObject.GetComponent<Ball>();
+        var ball = collision.collider.GetComponent<Ball>();
         if (ball != null)
         {
-            OnCollision(ball);
+            OnCollision();
         }
     }
 
@@ -29,11 +29,11 @@ public class BreakableBrick : BaseBrick
         var ball = collision.gameObject.GetComponent<Ball>();
         if (ball != null)
         {
-            OnCollision(ball);
+            OnCollision();
         }
     }
 
-    protected void OnCollision(Ball ball)
+    public void OnCollision()
     {
         health--;
         if (health <= 0)
